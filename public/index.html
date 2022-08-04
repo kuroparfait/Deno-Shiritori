@@ -9,8 +9,9 @@
 <body>
     <h1>しりとり</h1>
     <p id="previousWord"></p>
+    <p id="wordLength"></p>
     <form method="post" action="">
-        <input id="nextWordInput" type="text" />
+        <input id="nextWordInput" type="text" placeholder="lastLetter"/>
         <button id="nextWordSendButton">送信</button>
     </form>
 
@@ -24,9 +25,14 @@
             });
 
             const response = await fetch("/shiritori");
-            const previousWord = await response.text();
+            const mission = await response.text();
+            //const wordLength = await response.text();
             const para = document.querySelector("#previousWord");
-            para.innerText = `前の単語：${previousWord}`;
+            para.innerHTML = `${mission}`;
+            //const para2 = document.querySelector("#wordLength")
+            //para2.innerHTML = `文字数：${wordLength}`;
+            const elem = document.getElementById("nextWordInput");
+            elem.placeholder = mission.charAt(mission.length - 1);
         };
 
         document.querySelector("#nextWordSendButton").onclick = async(event) => {
